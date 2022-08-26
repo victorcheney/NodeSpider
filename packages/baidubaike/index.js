@@ -1,13 +1,12 @@
+const path = require("path");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const ora = require("ora");
+const fse = require("fs-extra");
 
-const spinner = ora("Loading unicorns");
+const filePath = path.join(__dirname, "/dist/brazil.txt");
 
-setTimeout(() => {
-  spinner.color = "yellow";
-  spinner.text = "Loading rainbows";
-}, 1000);
+const spinner = ora("Loading ...");
 
 let region = [];
 
@@ -24,11 +23,17 @@ async function fetchCountRegion() {
       const para = $(this);
       if (node === 39) {
         para.children().each(function () {
-          region.push($(this).text());
+          // region.push($(this).text()); // 名称
+          region.push([$(this).text(), $(this).attr("href")]); // href链接
         });
       }
     });
-    region = region.map((item) => item.trim()).filter((item) => item);
+    region = region
+      .map((item) => {
+        item[0] = item[0].trim();
+        return item;
+      })
+      .filter((item) => item[0] && !item[0].includes("["));
   } catch (error) {
     console.error(error);
   }
@@ -36,17 +41,13 @@ async function fetchCountRegion() {
   return region;
 }
 
-/* const rst = fetchCountRegion().then((res) => {
-  console.log(res);
-}); */
-
 // 获取州信息
-async function fetchStateInfo(name) {
+async function fetchStateInfo(item) {
+  let [name, href] = item;
   let state = { [name]: "" };
+  const tempUrl = href ? href : `/item/${encodeURIComponent(name)}`;
   try {
-    const res = await axios.get(
-      `https://baike.baidu.com/item/${encodeURIComponent(name)}`
-    );
+    const res = await axios.get(`https://baike.baidu.com${tempUrl}`);
     const $ = cheerio.load(res.data);
     $(".basicInfo-item.name").each(function (index) {
       const node = $(this);
@@ -65,24 +66,29 @@ async function fetchStateInfo(name) {
 async function runningLoop() {
   let rst = [];
   spinner.start();
+  const stream = fse.createWriteStream(filePath);
   await fetchCountRegion();
+  console.log(region);
   try {
     for (let i = 0, len = region.length; i < len; i++) {
-      const res = await delay(1500, region[i], len, i);
-      rst.push(res);
+      const res = await delay(500, region[i], len, i);
+      const key = Object.keys(res)[0];
+      const val = Object.values(res)[0];
+      // rst += `${key} ${val}\r\n`;
+      stream.write(`${key}\t${val}\r\n`);
     }
-    console.log(rst);
   } catch (error) {
     console.error(error);
+    spinner.stop();
   }
 }
 
-function delay(ms, name, len, i) {
+function delay(ms, item, len, i) {
   return new Promise((resolve, reject) => {
-    spinner.text = `[${len}/${i}] ${name} starting...`;
+    spinner.text = `[${len}/${i + 1}] ${item[0]} starting...`;
     setTimeout(async function () {
-      const res = await fetchStateInfo(name);
-      if (i >= len) {
+      const res = await fetchStateInfo(item);
+      if (i + 1 >= len) {
         spinner.stop();
       }
       resolve(res);
