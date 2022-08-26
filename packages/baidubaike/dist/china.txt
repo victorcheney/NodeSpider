@@ -1,0 +1,34 @@
+河北省	Hebei
+山西省	Shanxi
+辽宁省	Liaoning
+吉林省	Jilin Province
+黑龙江省	Heilongjiang
+江苏省	Jiangsu
+浙江省	Zhejiang
+安徽省	Anhui
+福建省	FujianHokkien
+江西省	Jiangxi
+山东省	Shandong
+河南省	Henan
+湖北省	Hubei
+湖南省	Hunan
+广东省	GuangdongKwangtung
+海南省	Hainan
+四川省	Sichuan
+贵州省	GuizhouKweichow
+云南省	Yunnan
+陕西省	Shaanxi
+甘肃省	Gansu
+青海省	Qinghai
+台湾省	Taiwan
+内蒙古自治区	Inner Mongolia  Nei Mongol
+广西壮族自治区	GuangXi
+西藏自治区	XizangTibet
+宁夏回族自治区	
+新疆维吾尔自治区	Xinjiang
+北京市	BeijingPeking
+天津市	Tianjin
+上海市	Shanghai
+重庆市	Chongqing，Chungking
+香港特别行政区	Hong Kong
+澳门特别行政区	Macao(英文)Macau(葡文)

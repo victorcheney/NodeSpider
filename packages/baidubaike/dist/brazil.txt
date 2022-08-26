@@ -3,13 +3,16 @@
 亚马孙	AMAZONAS或amazon
 阿马帕	Amapá
 巴伊亚	ESTADO DE BAHIA
+[2]
 塞阿拉	Ceará
 圣埃斯皮里图	Espírito Santo(O Estado do Espirito Santos-ES)
+[1]
 戈亚斯	Goiás
 马拉尼昂	Maranhão
 马托格罗索	Mato Grosso
 南马托格罗索	Mato Grosso do Sul
 米纳斯吉拉斯	Minas Geras(O Estado de Minas Gerais-MG)
+[1]
 帕拉	Pará
 帕拉伊巴	
 巴拉那	Paraná
